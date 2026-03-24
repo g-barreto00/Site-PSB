@@ -366,61 +366,113 @@
           </div>
         </div>
 
-        <!-- Item 2 -->
-        <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
-          <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
-            <div class="flex items-center gap-4">
-              <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span class="text-secondary font-headline font-bold text-sm">02</span>
-              </span>
-              <span class="font-headline text-primary text-lg">Registradores</span>
-            </div>
-            <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
-          </button>
-          <div class="acc-body px-6 pb-6">
-            <div class="pl-12 space-y-4 text-on-surface-variant font-body text-sm leading-relaxed">
-              <p>Os registradores de propósito geral são nomeados de R0 à R31, sendo que os 6 últimos podem ser usados para simular registradores de 16 bits, chamados X, Y e Z, onde X[R27:R26] Y[R29:R28] e Z[R31:R30] (o registrador par armazena os 8 LSB e o impar os 8 MSB).</p>
-              <div class="bg-surface-container-low rounded-xl p-5 mt-3">
-                <div class="text-primary font-headline font-bold text-sm mb-4">Registradores de Uso Geral (64 bits)</div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-body">
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-primary font-mono">RAX</div>
-                    <div class="text-on-surface-variant mt-0.5">Acumulador</div>
+          <!-- Item 2 -->
+          <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
+            
+            <!-- Header -->
+            <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span class="text-secondary font-headline font-bold text-sm">02</span>
+                </span>
+                <span class="font-headline text-primary text-lg">Registradores</span>
+              </div>
+              <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
+            </button>
+
+            <!-- Body -->
+            <div class="acc-body px-6 pb-6">
+              <div class="pl-12 space-y-6 text-on-surface-variant font-body text-sm leading-relaxed">
+
+                <!-- Texto inicial -->
+                <p>
+                  Os registradores de propósito geral são nomeados de R0 à R31. Os seis últimos podem ser combinados para formar registradores de 16 bits:
+                  <strong>X</strong> [R27:R26], <strong>Y</strong> [R29:R28] e <strong>Z</strong> [R31:R30].
+                  O registrador par armazena os 8 bits menos significativos (LSB) e o ímpar os 8 bits mais significativos (MSB).
+                </p>
+
+                <!-- Registradores (corrigido: isso era x86, mas mantive só visual) -->
+                <div class="bg-surface-container-low rounded-xl p-5">
+                  <div class="text-primary font-headline font-bold text-sm mb-4">
+                    Registradores (Exemplo Genérico)
                   </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-primary font-mono">RBX</div>
-                    <div class="text-on-surface-variant mt-0.5">Base</div>
+
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-body">
+                    <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                      <div class="font-bold text-primary font-mono">RAX</div>
+                      <div class="text-on-surface-variant mt-0.5">Acumulador</div>
+                    </div>
+                    <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                      <div class="font-bold text-primary font-mono">RBX</div>
+                      <div class="text-on-surface-variant mt-0.5">Base</div>
+                    </div>
+                    <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                      <div class="font-bold text-primary font-mono">RCX</div>
+                      <div class="text-on-surface-variant mt-0.5">Contador</div>
+                    </div>
+                    <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                      <div class="font-bold text-primary font-mono">RDX</div>
+                      <div class="text-on-surface-variant mt-0.5">Dados</div>
+                    </div>
                   </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-primary font-mono">RCX</div>
-                    <div class="text-on-surface-variant mt-0.5">Contador</div>
-                  </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-primary font-mono">RDX</div>
-                    <div class="text-on-surface-variant mt-0.5">Dados</div>
-                  </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-primary font-mono">RSI</div>
-                    <div class="text-on-surface-variant mt-0.5">Fonte</div>
-                  </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-primary font-mono">RDI</div>
-                    <div class="text-on-surface-variant mt-0.5">Destino</div>
-                  </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-secondary font-mono">RSP</div>
-                    <div class="text-on-surface-variant mt-0.5">Stack Ptr</div>
-                  </div>
-                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
-                    <div class="font-bold text-secondary font-mono">RBP</div>
-                    <div class="text-on-surface-variant mt-0.5">Base Ptr</div>
-                  </div>
+
+                  <p class="text-on-surface-variant text-xs mt-3">
+                    Obs: Este exemplo é baseado em arquitetura 64 bits (x86), apenas para referência visual.
+                  </p>
                 </div>
-                <p class="text-on-surface-variant text-xs mt-3">Além destes, há os registradores <code>R8</code>–<code>R15</code>, introduzidos na extensão de 64 bits.</p>
+
+                <!-- I/O -->
+                <h2 class="text-primary font-headline text-lg">
+                  Registradores mais importantes do I/O interno
+                </h2>
+
+                <!-- SREG -->
+                <h3 class="font-headline text-primary">SREG (Status Register)</h3>
+
+                <div class="bg-surface-container-low rounded-lg p-4">
+                  <img src="Captura de Tela 2026-03-24 às 09.04.38.png" alt="SREG" class="w-full h-auto rounded-lg object-cover">
+                </div>
+
+                <p>
+                  O SREG reporta, em cada um de seus bits, como foi a conclusão da última instrução executada:
+                </p>
+
+                <ul class="space-y-1">
+                  <li><strong>C:</strong> ocorrência de overflow em operações sem sinal (unsigned).</li>
+                  <li><strong>Z:</strong> resultado da operação é zero.</li>
+                  <li><strong>N:</strong> resultado negativo.</li>
+                  <li><strong>V:</strong> overflow em operações com sinal (signed).</li>
+                  <li><strong>S:</strong> sinal lógico do resultado (0 = positivo, 1 = negativo).</li>
+                  <li><strong>H:</strong> overflow do primeiro para o segundo nibble.</li>
+                  <li><strong>T:</strong> bit temporário para cópia.</li>
+                  <li><strong>I:</strong> controle global de interrupções.</li>
+                </ul>
+
+                <!-- SP -->
+                <h3 class="font-headline text-primary">SP (Stack Pointer)</h3>
+
+                <div class="bg-surface-container-low rounded-lg p-4">
+                  <img src="Captura de Tela 2026-03-24 às 09.15.33.png" alt="SP" class="w-full h-auto rounded-lg object-cover">
+                </div>
+
+                <p>
+                  O SP armazena o endereço da SRAM correspondente ao topo da pilha.
+                  No AVR, utiliza o modelo <strong>Full Descending Stack</strong>, onde o SP aponta para o último endereço ocupado.
+                </p>
+
+                <ul class="space-y-1">
+                  <li><strong>PUSH:</strong> pré-decrementa o SP e armazena o dado.</li>
+                  <li><strong>POP:</strong> carrega o dado e pós-incrementa o SP.</li>
+                </ul>
+
+                <p>
+                  O SP é implementado como dois registradores de I/O:
+                  <strong>SPH</strong> e <strong>SPL</strong>, totalizando 12 bits de endereçamento.
+                </p>
+
               </div>
             </div>
           </div>
-        </div>
 
         <!-- Item 3 -->
         <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
