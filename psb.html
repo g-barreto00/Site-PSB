@@ -343,7 +343,7 @@
             <div class="pl-12 space-y-4 text-on-surface-variant font-body text-sm leading-relaxed">
               <p>O <strong class="text-primary">ATMEGA328P</strong> é um microcontrolador (µC) RISC de 8 bits baseado na arquitetura AVR RISC, que por sua vez é uma implementação da arquitetura de Harvard, que separa a memória de Programa da memória de Dados. Por se tratar de um µC de arquitetura RISC, uma de suas principais caracteristicas é que apenas as instruções LOAD e STORE tem a capacidade de acessar registradores da Memória de dados. </p>
               <div class="bg-surface-container-low rounded-lg p-4 mt-4">
-                  <img src="Captura de Tela 2026-03-23 às 22.15.30.png" alt="Imagem" class="w-full h-auto rounded-lg object-cover">
+                  <img src="atmega.png" alt="Imagem" class="w-full h-auto rounded-lg object-cover">
               </div>
               
 
@@ -430,7 +430,7 @@
                 <h3 class="font-headline text-primary">SREG (Status Register)</h3>
 
                 <div class="bg-surface-container-low rounded-lg p-4">
-                  <img src="Captura de Tela 2026-03-24 às 09.04.38.png" alt="SREG" class="w-full h-auto rounded-lg object-cover">
+                  <img src="SREG.png" alt="SREG" class="w-full h-auto rounded-lg object-cover">
                 </div>
 
                 <p>
@@ -452,7 +452,7 @@
                 <h3 class="font-headline text-primary">SP (Stack Pointer)</h3>
 
                 <div class="bg-surface-container-low rounded-lg p-4">
-                  <img src="Captura de Tela 2026-03-24 às 09.15.33.png" alt="SP" class="w-full h-auto rounded-lg object-cover">
+                  <img src="stackpointer.png" alt="SP" class="w-full h-auto rounded-lg object-cover">
                 </div>
 
                 <p>
@@ -475,40 +475,62 @@
           </div>
 
         <!-- Item 3 -->
-        <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
-          <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
-            <div class="flex items-center gap-4">
-              <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span class="text-secondary font-headline font-bold text-sm">03</span>
-              </span>
-              <span class="font-headline text-primary text-lg">Modos de Endereçamento</span>
-            </div>
-            <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
-          </button>
-          <div class="acc-body px-6 pb-6">
-            <div class="pl-12 space-y-3 text-on-surface-variant font-body text-sm leading-relaxed">
-              <p>Definem como o processador acessa os operandos de uma instrução. Cada modo tem custo de ciclos diferente.</p>
-              <div class="space-y-2">
-                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
-                  <span class="bg-secondary text-on-secondary rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">IMM</span>
-                  <div><span class="text-primary font-label font-semibold">Imediato</span> — o valor está na própria instrução: <code>MOV RAX, 42</code></div>
+          <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
+            <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
+              <div class="flex items-center gap-4">
+                <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span class="text-secondary font-headline font-bold text-sm">03</span>
+                </span>
+                <span class="font-headline text-primary text-lg">Pinagem Essencial (PDIP-28)</span>
+              </div>
+              <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
+            </button>
+
+            <div class="acc-body px-6 pb-6">
+              <div class="pl-12 space-y-4 text-on-surface-variant font-body text-sm leading-relaxed">
+                <p>
+                  A tabela abaixo mostra alguns pinos essenciais de alimentação e referência do encapsulamento PDIP-28.
+                </p>
+
+                <div class="overflow-x-auto">
+                  <table class="w-full border border-outline-variant/25 rounded-lg overflow-hidden text-sm">
+                    <thead class="bg-surface-container-low text-primary">
+                      <tr>
+                        <th class="text-left px-4 py-3 font-semibold">Pino</th>
+                        <th class="text-left px-4 py-3 font-semibold">Símbolo</th>
+                        <th class="text-left px-4 py-3 font-semibold">Função Principal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-t border-outline-variant/20">
+                        <td class="px-4 py-3">7</td>
+                        <td class="px-4 py-3 font-semibold text-primary">Vcc</td>
+                        <td class="px-4 py-3">Alimentação (+5V) para circuitos digitais</td>
+                      </tr>
+                      <tr class="border-t border-outline-variant/20">
+                        <td class="px-4 py-3">20</td>
+                        <td class="px-4 py-3 font-semibold text-primary">AVcc</td>
+                        <td class="px-4 py-3">Alimentação (+5V) para circuitos analógicos</td>
+                      </tr>
+                      <tr class="border-t border-outline-variant/20">
+                        <td class="px-4 py-3">21</td>
+                        <td class="px-4 py-3 font-semibold text-primary">AREF</td>
+                        <td class="px-4 py-3">Tensão de referência para o ADC</td>
+                      </tr>
+                      <tr class="border-t border-outline-variant/20">
+                        <td class="px-4 py-3">8, 22</td>
+                        <td class="px-4 py-3 font-semibold text-primary">GND</td>
+                        <td class="px-4 py-3">Aterramento</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
-                  <span class="bg-primary text-on-primary rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">REG</span>
-                  <div><span class="text-primary font-label font-semibold">Registrador</span> — operando é um registrador: <code>MOV RAX, RBX</code></div>
-                </div>
-                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
-                  <span class="bg-tertiary text-on-tertiary rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">MEM</span>
-                  <div><span class="text-primary font-label font-semibold">Memória Direta</span> — endereço literal: <code>MOV RAX, [0x1000]</code></div>
-                </div>
-                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
-                  <span class="bg-tertiary-container text-on-tertiary-container rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">IND</span>
-                  <div><span class="text-primary font-label font-semibold">Indireto por Registrador</span>: <code>MOV RAX, [RBX]</code></div>
-                </div>
+                  <div class="bg-surface-container-low rounded-lg p-4">
+                    <img src="pinosATMEGA.png" alt="SP" class="w-full h-auto rounded-lg object-cover">
+                  </div>
               </div>
             </div>
           </div>
-        </div>
 
         <!-- Item 4 -->
         <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
@@ -517,7 +539,7 @@
               <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
                 <span class="text-secondary font-headline font-bold text-sm">04</span>
               </span>
-              <span class="font-headline text-primary text-lg">Pilha e Chamadas de Função</span>
+              <span class="font-headline text-primary text-lg">Instruções de Controle de Fluxo</span>
             </div>
             <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
           </button>
