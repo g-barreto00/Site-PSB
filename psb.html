@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<title>PSB · Software Básico UFBA</title>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-dim": "#dadad5",
+          "on-primary-fixed-variant": "#2a4386",
+          "on-secondary-fixed-variant": "#900723",
+          "secondary-fixed-dim": "#ffb3b3",
+          "on-tertiary-fixed": "#211b00",
+          "on-primary-fixed": "#00174a",
+          "inverse-primary": "#b3c5ff",
+          "outline-variant": "#c5c6d2",
+          "tertiary-fixed": "#f7e382",
+          "inverse-surface": "#2f312e",
+          "on-surface": "#1a1c19",
+          "surface-bright": "#fafaf5",
+          "primary-container": "#002366",
+          "surface-variant": "#e3e3de",
+          "surface-tint": "#435b9f",
+          "surface-container-highest": "#e3e3de",
+          "error": "#ba1a1a",
+          "on-secondary": "#ffffff",
+          "on-primary": "#ffffff",
+          "secondary-container": "#fe5f6b",
+          "primary": "#00113a",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-low": "#f4f4ef",
+          "primary-fixed": "#dbe1ff",
+          "on-tertiary": "#ffffff",
+          "on-error": "#ffffff",
+          "on-background": "#1a1c19",
+          "on-primary-container": "#758dd5",
+          "primary-fixed-dim": "#b3c5ff",
+          "on-secondary-fixed": "#40000a",
+          "inverse-on-surface": "#f1f1ec",
+          "on-tertiary-container": "#493f00",
+          "tertiary-fixed-dim": "#dac769",
+          "surface-container": "#eeeee9",
+          "on-secondary-container": "#640014",
+          "tertiary-container": "#bdab51",
+          "surface-container-high": "#e8e8e3",
+          "secondary-fixed": "#ffdad9",
+          "error-container": "#ffdad6",
+          "on-tertiary-fixed-variant": "#524700",
+          "on-surface-variant": "#444650",
+          "tertiary": "#6c5e06",
+          "surface": "#fafaf5",
+          "secondary": "#b22738",
+          "outline": "#757682",
+          "on-error-container": "#93000a",
+          "background": "#fafaf5"
+        },
+        fontFamily: {
+          "headline": ["Noto Serif", "serif"],
+          "body": ["Work Sans", "sans-serif"],
+          "label": ["Work Sans", "sans-serif"]
+        },
+        borderRadius: {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  }
+  body {
+    background-color: #fafaf5;
+    color: #1a1c19;
+    font-family: 'Work Sans', sans-serif;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Noto Serif', serif;
+  }
+
+  /* Nav glass */
+  nav {
+    background: rgba(250, 250, 245, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Hero image grayscale blend — idêntico à referência */
+  .hero-img {
+    filter: grayscale(100%);
+    opacity: 0.82;
+    mix-blend-mode: multiply;
+  }
+
+  /* Card hover lift */
+  .module-card {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    border: 1px solid rgba(197,198,210,0.35);
+  }
+  .module-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(26,28,25,0.08);
+  }
+
+  /* Simulide video hover */
+  .video-thumb {
+    transition: transform 0.5s ease;
+  }
+  .video-container:hover .video-thumb {
+    transform: scale(1.04);
+  }
+
+  /* Steps number */
+  .step-num {
+    font-family: 'Noto Serif', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: rgba(197,198,210,0.25);
+    line-height: 1;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    transition: color 0.2s;
+  }
+  .step-card:hover .step-num {
+    color: rgba(178,39,56,0.18);
+  }
+
+  /* Material section dark CTA */
+  .material-cta {
+    background: linear-gradient(135deg, #00113a 0%, #002366 100%);
+  }
+
+  /* Inline code style */
+  code {
+    font-family: 'Courier New', monospace;
+    background: rgba(0,17,58,0.07);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.88em;
+    color: #00113a;
+  }
+
+  /* Content accordion */
+  .acc-body { display: none; }
+  .acc-body.open { display: block; }
+  .acc-arrow { transition: transform 0.2s; }
+  .acc-arrow.open { transform: rotate(180deg); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #f4f4ef; }
+  ::-webkit-scrollbar-thumb { background: #c5c6d2; border-radius: 3px; }
+</style>
+</head>
+<body class="bg-background text-on-surface">
+
+<!-- ══════════════════
+     NAV — idêntica à referência
+══════════════════ -->
+<nav class="fixed top-0 w-full z-50 border-b border-outline-variant/20">
+  <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+    <div class="font-headline font-bold text-xl text-primary">
+      PSB <span class="text-secondary italic font-normal">UFBA</span>
+    </div>
+    <div class="hidden md:flex gap-8 items-center">
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-headline text-base tracking-tight" href="#teoria">Teoria</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-headline text-base tracking-tight" href="#simulide">SIMULIDE</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-headline text-base tracking-tight" href="#instrucoes">Instruções</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-headline text-base tracking-tight" href="#material">Material</a>
+      
+    </div>
+    <!-- Mobile hamburger -->
+    <button class="md:hidden text-primary" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div class="hidden md:hidden bg-background border-t border-outline-variant/20 px-8 py-4 flex flex-col gap-4">
+    <a class="text-on-surface-variant font-headline text-base" href="#teoria">Teoria</a>
+    <a class="text-on-surface-variant font-headline text-base" href="#simulide">SIMULIDE</a>
+    <a class="text-on-surface-variant font-headline text-base" href="#instrucoes">Instruções</a>
+    <a class="text-on-surface-variant font-headline text-base" href="#material">Material</a>
+  </div>
+</nav>
+
+<main class="pt-20">
+
+<!-- ══════════════════
+     HERO — layout 2 colunas exato da referência
+══════════════════ -->
+<section class="relative min-h-[820px] flex items-center px-8 max-w-7xl mx-auto overflow-hidden">
+
+  <!-- Left: texto -->
+  <div class="z-10 max-w-xl">
+    <span class="text-tertiary uppercase tracking-[0.18em] font-label font-medium text-xs mb-5 block">
+      Departamento de Ciência da Computação
+    </span>
+
+    <h1 class="text-[3.6rem] md:text-[4.2rem] font-headline font-bold text-primary leading-[1.06] mb-6">
+      Programação de<br/>Software Básico<br/>
+      <span class="text-secondary italic">UFBA</span>
+    </h1>
+
+    <p class="text-base text-on-surface-variant font-body leading-relaxed mb-10 max-w-lg">
+      Este site foi desenvolvido para facilitar o estudo de Programação de Software Básico, reunindo conteúdos sobre arquitetura de computadores, linguagem Assembly e execução de programas em baixo nível.
+    </p>
+
+    <div class="flex flex-wrap gap-4">
+      <a href="#teoria" class="bg-primary text-on-primary px-7 py-3.5 rounded-lg font-body font-semibold flex items-center gap-2 hover:scale-[1.02] transition-transform text-sm">
+        Principais Tópicos
+        <span class="material-symbols-outlined text-base">arrow_downward</span>
+      </a>
+      <a href="#material" class="border border-outline-variant/40 text-primary px-7 py-3.5 rounded-lg font-body font-semibold flex items-center gap-2 hover:bg-surface-container-low transition-colors text-sm">
+        Material Didático
+        <span class="material-symbols-outlined text-base">menu_book</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Right: imagem grande em grayscale — idêntico à referência -->
+  <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[46%] h-[78%] hidden lg:block overflow-hidden rounded-xl">
+    <div class="w-full h-full bg-surface-container-high flex items-center justify-center relative">
+      <!-- Processor SVG placeholder que imita o chip da foto -->
+     
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════
+     TEORIA — 4 cards exatamente como na referência
+══════════════════ -->
+<section class="py-24 bg-surface-container-low" id="teoria">
+  <div class="max-w-7xl mx-auto px-8">
+
+    <div class="mb-14">
+      <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold"></span>
+      <h2 class="text-4xl font-headline text-primary mt-2">Tópicos de Estudo</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <!-- Card 1: Teoria e Conceitos -->
+      <a href="#teoria-conteudo" class="module-card group block bg-surface-container-lowest p-8 rounded-xl">
+        <span class="material-symbols-outlined text-4xl text-secondary mb-6 block">menu_book</span>
+        <h3 class="text-xl font-headline text-primary mb-4">Teoria e Conceitos</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+          Estudo dos fundamentos de como o software é executado pelo hardware, incluindo memória, registradores, linguagem de baixo nível e tradução de instruções.
+        </p>
+        <div class="flex items-center text-primary text-xs font-label font-bold uppercase tracking-wider gap-1">
+          Explorar módulo
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </div>
+      </a>
+
+      <!-- Card 2: Laboratório SimulIDE -->
+      <a href="#simulide" class="module-card group block bg-surface-container-lowest p-8 rounded-xl">
+        <span class="material-symbols-outlined text-4xl text-secondary mb-6 block">memory</span>
+        <h3 class="text-xl font-headline text-primary mb-4">SimulIDE</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+          Simulação de circuitos eletrônicos e validação prática de algoritmos em Assembly em tempo real.
+        </p>
+        <div class="flex items-center text-primary text-xs font-label font-bold uppercase tracking-wider gap-1">
+          Explorar módulo
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </div>
+      </a>
+
+      <!-- Card 3: Instruções de Base -->
+      <a href="#instrucoes" class="module-card group block bg-surface-container-lowest p-8 rounded-xl">
+        <span class="material-symbols-outlined text-4xl text-secondary mb-6 block">settings_suggest</span>
+        <h3 class="text-xl font-headline text-primary mb-4">Instruções de Base</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+          Configuração completa do ambiente de desenvolvimento, toolchains de compilação e depuração.
+        </p>
+        <div class="flex items-center text-primary text-xs font-label font-bold uppercase tracking-wider gap-1">
+          Explorar módulo
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </div>
+      </a>
+
+      <!-- Card 4: Material de Apoio -->
+      <a href="#material" class="module-card group block bg-surface-container-lowest p-8 rounded-xl">
+        <span class="material-symbols-outlined text-4xl text-secondary mb-6 block">library_books</span>
+        <h3 class="text-xl font-headline text-primary mb-4">Material de Apoio</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+          Acesso a repositórios do GitHub, videoaulas complementares, fóruns e o syllabus detalhado.
+        </p>
+        <div class="flex items-center text-primary text-xs font-label font-bold uppercase tracking-wider gap-1">
+          Explorar módulo
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════
+     TEORIA EXPANDIDA — conteúdo real de estudo
+══════════════════ -->
+<section class="py-24 bg-background" id="teoria-conteudo">
+  <div class="max-w-7xl mx-auto px-8">
+
+    <div class="mb-14">
+      <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold">Módulo 01</span>
+      <h2 class="text-4xl font-headline text-primary mt-2">Teoria e Conceitos</h2>
+      <p class="text-on-surface-variant mt-3 max-w-2xl font-body leading-relaxed">
+        Os conceitos abaixo formam a base para toda a disciplina. Clique em cada tópico para expandir o conteúdo.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- Coluna conteúdo accordion -->
+      <div class="lg:col-span-2 space-y-3">
+
+        <!-- Item 1 -->
+        <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
+          <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
+            <div class="flex items-center gap-4">
+              <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-secondary font-headline font-bold text-sm">01</span>
+              </span>
+              <span class="font-headline text-primary text-lg">Introdução</span>
+            </div>
+            <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
+          </button>
+          <div class="acc-body px-6 pb-6">
+            <div class="pl-12 space-y-4 text-on-surface-variant font-body text-sm leading-relaxed">
+              <p>O <strong class="text-primary">ATMEGA328P</strong> é um microcontrolador (µC) RISC de 8 bits baseado na arquitetura AVR RISC, que por sua vez é uma implementação da arquitetura de Harvard, que separa a memória de Programa da memória de Dados. Por se tratar de um µC de arquitetura RISC, uma de suas principais caracteristicas é que apenas as instruções LOAD e STORE tem a capacidade de acessar registradores da Memória de dados. </p>
+              <div class="bg-surface-container-low rounded-lg p-4 mt-4">
+                  <img src="Captura de Tela 2026-03-23 às 22.15.30.png" alt="Imagem" class="w-full h-auto rounded-lg object-cover">
+              </div>
+              
+
+                    <div>
+                      <h3 class="text-primary font-bold mb-2">Especificações Principais</h3>
+                      <ul class="text-on-surface-variant text-sm space-y-1">
+                        <li><strong>Arquitetura:</strong> AVR RISC de 8 bits</li>
+                        <li><strong>Instruções:</strong> 131</li>
+                        <li><strong>Memória de Programa:</strong> 32 KB</li>
+                        <li><strong>Memória de Dados:</strong> 2304 B</li>
+                        <li><strong>SRAM (RAM):</strong> 2 KB</li>
+                        <li><strong>I/O Externo:</strong> 160 B</li>
+                        <li><strong>I/O Interno:</strong> 64 B</li>
+                        <li><strong>Registradores de propósito geral:</strong> 32</li>
+                        <li><strong>EEPROM (ROM):</strong> 1 KB</li>
+                        <li><strong>Pinos de I/O:</strong> 23</li>
+                      </ul>
+                    </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
+          <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
+            <div class="flex items-center gap-4">
+              <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-secondary font-headline font-bold text-sm">02</span>
+              </span>
+              <span class="font-headline text-primary text-lg">Registradores</span>
+            </div>
+            <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
+          </button>
+          <div class="acc-body px-6 pb-6">
+            <div class="pl-12 space-y-4 text-on-surface-variant font-body text-sm leading-relaxed">
+              <p>Os registradores de propósito geral são nomeados de R0 à R31, sendo que os 6 últimos podem ser usados para simular registradores de 16 bits, chamados X, Y e Z, onde X[R27:R26] Y[R29:R28] e Z[R31:R30] (o registrador par armazena os 8 LSB e o impar os 8 MSB).</p>
+              <div class="bg-surface-container-low rounded-xl p-5 mt-3">
+                <div class="text-primary font-headline font-bold text-sm mb-4">Registradores de Uso Geral (64 bits)</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-body">
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-primary font-mono">RAX</div>
+                    <div class="text-on-surface-variant mt-0.5">Acumulador</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-primary font-mono">RBX</div>
+                    <div class="text-on-surface-variant mt-0.5">Base</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-primary font-mono">RCX</div>
+                    <div class="text-on-surface-variant mt-0.5">Contador</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-primary font-mono">RDX</div>
+                    <div class="text-on-surface-variant mt-0.5">Dados</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-primary font-mono">RSI</div>
+                    <div class="text-on-surface-variant mt-0.5">Fonte</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-primary font-mono">RDI</div>
+                    <div class="text-on-surface-variant mt-0.5">Destino</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-secondary font-mono">RSP</div>
+                    <div class="text-on-surface-variant mt-0.5">Stack Ptr</div>
+                  </div>
+                  <div class="bg-surface-container rounded-lg p-2.5 text-center">
+                    <div class="font-bold text-secondary font-mono">RBP</div>
+                    <div class="text-on-surface-variant mt-0.5">Base Ptr</div>
+                  </div>
+                </div>
+                <p class="text-on-surface-variant text-xs mt-3">Além destes, há os registradores <code>R8</code>–<code>R15</code>, introduzidos na extensão de 64 bits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
+          <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
+            <div class="flex items-center gap-4">
+              <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-secondary font-headline font-bold text-sm">03</span>
+              </span>
+              <span class="font-headline text-primary text-lg">Modos de Endereçamento</span>
+            </div>
+            <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
+          </button>
+          <div class="acc-body px-6 pb-6">
+            <div class="pl-12 space-y-3 text-on-surface-variant font-body text-sm leading-relaxed">
+              <p>Definem como o processador acessa os operandos de uma instrução. Cada modo tem custo de ciclos diferente.</p>
+              <div class="space-y-2">
+                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
+                  <span class="bg-secondary text-on-secondary rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">IMM</span>
+                  <div><span class="text-primary font-label font-semibold">Imediato</span> — o valor está na própria instrução: <code>MOV RAX, 42</code></div>
+                </div>
+                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
+                  <span class="bg-primary text-on-primary rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">REG</span>
+                  <div><span class="text-primary font-label font-semibold">Registrador</span> — operando é um registrador: <code>MOV RAX, RBX</code></div>
+                </div>
+                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
+                  <span class="bg-tertiary text-on-tertiary rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">MEM</span>
+                  <div><span class="text-primary font-label font-semibold">Memória Direta</span> — endereço literal: <code>MOV RAX, [0x1000]</code></div>
+                </div>
+                <div class="flex gap-3 bg-surface-container-low rounded-lg p-3 items-start">
+                  <span class="bg-tertiary-container text-on-tertiary-container rounded px-2 py-0.5 text-xs font-label font-bold flex-shrink-0">IND</span>
+                  <div><span class="text-primary font-label font-semibold">Indireto por Registrador</span>: <code>MOV RAX, [RBX]</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="bg-surface-container-lowest border border-outline-variant/25 rounded-xl overflow-hidden">
+          <button onclick="toggleAcc(this)" class="w-full flex items-center justify-between p-6 text-left group">
+            <div class="flex items-center gap-4">
+              <span class="w-8 h-8 bg-primary/8 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-secondary font-headline font-bold text-sm">04</span>
+              </span>
+              <span class="font-headline text-primary text-lg">Pilha e Chamadas de Função</span>
+            </div>
+            <span class="material-symbols-outlined acc-arrow text-on-surface-variant text-xl">expand_more</span>
+          </button>
+          <div class="acc-body px-6 pb-6">
+            <div class="pl-12 space-y-4 text-on-surface-variant font-body text-sm leading-relaxed">
+              <p>A <strong class="text-primary">pilha</strong> (<em>stack</em>) é uma região de memória LIFO controlada pelos registradores <code>RSP</code> e <code>RBP</code>. É usada para passar argumentos, salvar o endereço de retorno e variáveis locais.</p>
+              <div class="bg-primary rounded-xl p-5 font-mono text-xs text-on-primary/80 leading-6">
+                <div class="text-tertiary-fixed mb-2 font-label font-bold not-italic">; Estrutura básica de uma função</div>
+                <div><span class="text-secondary-container">minha_func:</span></div>
+                <div class="pl-4"><span class="text-on-primary-container">push</span>  rbp         <span class="text-on-primary/40">; salva base pointer</span></div>
+                <div class="pl-4"><span class="text-on-primary-container">mov</span>   rbp, rsp    <span class="text-on-primary/40">; novo frame</span></div>
+                <div class="pl-4"><span class="text-on-primary-container">sub</span>   rsp, 16     <span class="text-on-primary/40">; aloca locais</span></div>
+                <div class="pl-4 mt-2 text-on-primary/40">; ... corpo da função ...</div>
+                <div class="pl-4 mt-2"><span class="text-on-primary-container">mov</span>   rsp, rbp    <span class="text-on-primary/40">; restaura</span></div>
+                <div class="pl-4"><span class="text-on-primary-container">pop</span>   rbp</div>
+                <div class="pl-4"><span class="text-on-primary-container">ret</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar com referência rápida -->
+      <div class="space-y-5">
+        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <div class="text-tertiary font-label text-xs uppercase tracking-wider mb-4">Referência Rápida</div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">MOV dst, src</code>
+              <span class="text-on-surface-variant text-xs font-body">Mover dados</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">ADD dst, src</code>
+              <span class="text-on-surface-variant text-xs font-body">Adição</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">SUB dst, src</code>
+              <span class="text-on-surface-variant text-xs font-body">Subtração</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">CMP a, b</code>
+              <span class="text-on-surface-variant text-xs font-body">Comparar</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">JMP label</code>
+              <span class="text-on-surface-variant text-xs font-body">Salto</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">JZ / JNZ</code>
+              <span class="text-on-surface-variant text-xs font-body">Desvio condicional</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+              <code class="text-secondary font-body">CALL label</code>
+              <span class="text-on-surface-variant text-xs font-body">Chamar função</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <code class="text-secondary font-body">RET</code>
+              <span class="text-on-surface-variant text-xs font-body">Retornar</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+          <div class="text-tertiary font-label text-xs uppercase tracking-wider mb-4">Flags de Status</div>
+          <div class="space-y-2.5 text-sm font-body">
+            <div class="flex items-center gap-3">
+              <span class="w-6 h-6 bg-secondary text-on-secondary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">ZF</span>
+              <span class="text-on-surface-variant">Zero Flag — resultado = 0</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-6 h-6 bg-primary text-on-primary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">SF</span>
+              <span class="text-on-surface-variant">Sign Flag — resultado negativo</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-6 h-6 bg-tertiary text-on-tertiary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">CF</span>
+              <span class="text-on-surface-variant">Carry Flag — overflow sem sinal</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-6 h-6 bg-outline text-on-primary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">OF</span>
+              <span class="text-on-surface-variant">Overflow Flag — overflow c/ sinal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════
+     SIMULIDE — layout 2 colunas, idêntico à referência
+══════════════════ -->
+<section class="py-24 px-8 max-w-7xl mx-auto" id="simulide">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+    <div>
+      <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold">Laboratório Virtual</span>
+      <h2 class="text-5xl font-headline text-primary mt-4 mb-8 leading-tight">SimulIDE:<br/>Prática e Validação</h2>
+      <p class="text-on-surface-variant text-lg leading-relaxed mb-8 font-body">
+        O SimulIDE é um simulador de circuitos eletrônicos em tempo real que permite visualizar a execução de códigos Assembly em hardware simulado. É a ferramenta central dos laboratórios da disciplina.
+      </p>
+      <ul class="space-y-4 mb-10">
+        <li class="flex items-center gap-3 text-primary font-body font-medium">
+          <span class="material-symbols-outlined text-secondary">check_circle</span>
+          Simulação lógica de alta performance
+        </li>
+        <li class="flex items-center gap-3 text-primary font-body font-medium">
+          <span class="material-symbols-outlined text-secondary">check_circle</span>
+          Debug visual de registradores e memória
+        </li>
+        <li class="flex items-center gap-3 text-primary font-body font-medium">
+          <span class="material-symbols-outlined text-secondary">check_circle</span>
+          Suporte a múltiplos microcontroladores
+        </li>
+        <li class="flex items-center gap-3 text-primary font-body font-medium">
+          <span class="material-symbols-outlined text-secondary">check_circle</span>
+          Integração com código Assembly NASM
+        </li>
+      </ul>
+
+      <!-- Passos de uso -->
+      <div class="space-y-3 mb-10">
+        <div class="text-primary font-label font-bold text-xs uppercase tracking-wider mb-3">Como usar no SimulIDE</div>
+        <div class="flex gap-3 bg-surface-container-low rounded-lg p-4 items-start">
+          <span class="w-6 h-6 bg-secondary text-on-secondary rounded-full flex items-center justify-center text-xs font-label font-bold flex-shrink-0">1</span>
+          <span class="text-on-surface-variant text-sm font-body">Crie seu arquivo <code>.asm</code> com NASM e compile com <code>nasm -f elf64</code></span>
+        </div>
+        <div class="flex gap-3 bg-surface-container-low rounded-lg p-4 items-start">
+          <span class="w-6 h-6 bg-secondary text-on-secondary rounded-full flex items-center justify-center text-xs font-label font-bold flex-shrink-0">2</span>
+          <span class="text-on-surface-variant text-sm font-body">Importe o binário no SimulIDE pelo menu <strong class="text-primary">File → Load Firmware</strong></span>
+        </div>
+        <div class="flex gap-3 bg-surface-container-low rounded-lg p-4 items-start">
+          <span class="w-6 h-6 bg-secondary text-on-secondary rounded-full flex items-center justify-center text-xs font-label font-bold flex-shrink-0">3</span>
+          <span class="text-on-surface-variant text-sm font-body">Use os breakpoints visuais para inspecionar registradores ciclo a ciclo</span>
+        </div>
+      </div>
+
+      <a href="#" class="inline-flex items-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-lg font-body font-bold hover:opacity-90 transition-opacity text-sm">
+        <span class="material-symbols-outlined">download</span>
+        Baixar SimulIDE v0.4.15
+      </a>
+    </div>
+
+    <!-- Video placeholder -->
+    <div class="relative aspect-video bg-surface-container-high rounded-xl overflow-hidden flex items-center justify-center video-container cursor-pointer group">
+      <!-- Fundo simulando terminal -->
+      <div class="absolute inset-0 bg-primary">
+        <div class="p-6 font-mono text-xs text-on-primary/40 leading-6 select-none">
+          <div class="text-tertiary-fixed mb-3">; exemplo.asm — hello world via syscall</div>
+          <div><span class="text-on-primary-container">section</span> .data</div>
+          <div class="pl-4">msg  <span class="text-on-primary-container">db</span>  <span class="text-secondary-container">"Hello, PSB!"</span>, 10</div>
+          <div class="pl-4">len  <span class="text-on-primary-container">equ</span>  $ - msg</div>
+          <div class="mt-2"><span class="text-on-primary-container">section</span> .text</div>
+          <div class="pl-4"><span class="text-on-primary-container">global</span> _start</div>
+          <div><span class="text-secondary-container">_start:</span></div>
+          <div class="pl-4"><span class="text-on-primary-container">mov</span>   rax, 1</div>
+          <div class="pl-4"><span class="text-on-primary-container">mov</span>   rdi, 1</div>
+          <div class="pl-4"><span class="text-on-primary-container">mov</span>   rsi, msg</div>
+          <div class="pl-4"><span class="text-on-primary-container">mov</span>   rdx, len</div>
+          <div class="pl-4"><span class="text-on-primary-container">syscall</span></div>
+          <div class="pl-4"><span class="text-on-primary-container">mov</span>   rax, 60</div>
+          <div class="pl-4"><span class="text-on-primary-container">xor</span>   rdi, rdi</div>
+          <div class="pl-4"><span class="text-on-primary-container">syscall</span></div>
+        </div>
+      </div>
+      <!-- Play button -->
+      <div class="z-10 text-center group-hover:scale-105 transition-transform">
+        <div class="w-20 h-20 bg-on-primary/90 text-primary rounded-full flex items-center justify-center mb-4 mx-auto shadow-2xl">
+          <span class="material-symbols-outlined text-4xl">play_arrow</span>
+        </div>
+        <p class="font-headline text-on-primary font-bold text-xl">Tutorial de Introdução</p>
+        <p class="text-sm text-on-primary/60 font-body">Assistir no YouTube (12:45)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════
+     INSTRUÇÕES — 4 steps layout horizontal idêntico à referência
+══════════════════ -->
+<section class="py-24 bg-surface-container-low" id="instrucoes">
+  <div class="max-w-7xl mx-auto px-8">
+
+    <div class="text-center mb-20">
+      <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold">Configuração do Ambiente</span>
+      <h2 class="text-4xl font-headline text-primary mt-2">Instruções de Base</h2>
+      <p class="text-on-surface-variant mt-4 font-body">Guia passo a passo para configurar seu ambiente de desenvolvimento</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+      <!-- Step 1 -->
+      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
+        <div class="step-num">01</div>
+        <h4 class="text-xl font-headline text-primary mb-4">Toolchain</h4>
+        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
+          Instalação do NASM e GCC para compilação de código Assembly e integração com C.
+        </p>
+        <div class="bg-surface-container rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+          <div class="text-on-surface/50 mb-1"># Ubuntu/Debian</div>
+          <div>$ sudo apt install nasm gcc</div>
+          <div class="mt-1 text-on-surface/50"># verificar</div>
+          <div>$ nasm --version</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
+        <div class="step-num">02</div>
+        <h4 class="text-xl font-headline text-primary mb-4">Ambiente</h4>
+        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
+          Configuração do VS Code com extensões de syntax highlighting e debuggers específicos.
+        </p>
+        <div class="space-y-2">
+          <div class="bg-surface-container rounded-lg px-3 py-2 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-secondary flex-shrink-0"></span>
+            <span class="text-xs font-body text-on-surface">ASM Code Lens</span>
+          </div>
+          <div class="bg-surface-container rounded-lg px-3 py-2 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-tertiary flex-shrink-0"></span>
+            <span class="text-xs font-body text-on-surface">x86 and x86_64 NASM</span>
+          </div>
+          <div class="bg-surface-container rounded-lg px-3 py-2 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary flex-shrink-0"></span>
+            <span class="text-xs font-body text-on-surface">Native Debug (GDB)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
+        <div class="step-num">03</div>
+        <h4 class="text-xl font-headline text-primary mb-4">Compilação</h4>
+        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
+          Inclusão das headers padrão e procedimento de montagem e linkedição do binário final.
+        </p>
+        <div class="bg-surface-container rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+          <div class="text-on-surface/50 mb-1"># montar</div>
+          <div>$ nasm -f elf64 prog.asm</div>
+          <div class="mt-1 text-on-surface/50"># linkar</div>
+          <div>$ ld -o prog prog.o</div>
+          <div class="mt-1 text-on-surface/50"># executar</div>
+          <div>$ ./prog</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
+        <div class="step-num">04</div>
+        <h4 class="text-xl font-headline text-primary mb-4">Depuração</h4>
+        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
+          Uso do GDB para depuração passo a passo, inspecionando registradores e memória em tempo real.
+        </p>
+        <div class="bg-surface-container rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+          <div class="text-on-surface/50 mb-1"># compilar com debug</div>
+          <div>$ nasm -f elf64 -g prog.asm</div>
+          <div class="mt-1">$ gdb ./prog</div>
+          <div class="text-on-primary-container">(gdb) break _start</div>
+          <div class="text-on-primary-container">(gdb) run</div>
+          <div class="text-on-primary-container">(gdb) info registers</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════
+     MATERIAL — dark CTA com grid de 4 links, idêntico à referência
+══════════════════ -->
+<section class="py-24 px-8 max-w-7xl mx-auto" id="material">
+  <div class="material-cta p-12 lg:p-20 relative overflow-hidden rounded-xl">
+
+    <div class="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-12">
+
+      <div class="max-w-xl text-center lg:text-left">
+        <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold">Recursos</span>
+        <h2 class="text-4xl font-headline text-on-primary mb-6 mt-2">Material de Apoio Digital</h2>
+        <p class="text-on-primary-container text-lg font-body leading-relaxed">
+          Acesse os repositórios oficiais, videoaulas e fóruns de discussão para acelerar seu aprendizado em PSB.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 w-full lg:w-auto">
+        <a class="bg-white/8 hover:bg-white/15 p-6 rounded-xl text-on-primary transition-all flex flex-col items-center gap-3 border border-white/10 group" href="#">
+          <span class="material-symbols-outlined text-tertiary-fixed text-2xl group-hover:scale-110 transition-transform">description</span>
+          <span class="font-label font-medium text-sm">Syllabus</span>
+        </a>
+        <a class="bg-white/8 hover:bg-white/15 p-6 rounded-xl text-on-primary transition-all flex flex-col items-center gap-3 border border-white/10 group" href="#">
+          <span class="material-symbols-outlined text-tertiary-fixed text-2xl group-hover:scale-110 transition-transform">smart_display</span>
+          <span class="font-label font-medium text-sm">Playlist</span>
+        </a>
+        <a class="bg-white/8 hover:bg-white/15 p-6 rounded-xl text-on-primary transition-all flex flex-col items-center gap-3 border border-white/10 group" href="#">
+          <span class="material-symbols-outlined text-tertiary-fixed text-2xl group-hover:scale-110 transition-transform">code</span>
+          <span class="font-label font-medium text-sm">GitHub</span>
+        </a>
+        <a class="bg-white/8 hover:bg-white/15 p-6 rounded-xl text-on-primary transition-all flex flex-col items-center gap-3 border border-white/10 group" href="#">
+          <span class="material-symbols-outlined text-tertiary-fixed text-2xl group-hover:scale-110 transition-transform">forum</span>
+          <span class="font-label font-medium text-sm">Fórum</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Decorativas -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary-container/40 rounded-full -ml-32 -mb-32 blur-3xl pointer-events-none"></div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ══════════════════
+     FOOTER — idêntico à referência
+══════════════════ -->
+<footer class="w-full py-12 px-8 border-t border-outline-variant/20 bg-surface-container-low">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+    <div>
+      <div class="font-headline font-bold text-lg text-primary mb-4">PSB · UFBA</div>
+      <p class="text-on-surface-variant font-body text-sm leading-relaxed">
+        Ensino de excelência em sistemas de computação e desenvolvimento de baixo nível no coração da Bahia.
+      </p>
+    </div>
+    <div class="flex flex-col gap-3">
+      <span class="text-primary font-label font-bold text-xs uppercase tracking-wider mb-1">Universidade</span>
+      <a class="text-on-surface-variant hover:text-primary underline transition-colors font-body text-sm" href="#">Sobre o DCC</a>
+      <a class="text-on-surface-variant hover:text-primary underline transition-colors font-body text-sm" href="#">Calendário Acadêmico</a>
+    </div>
+    <div class="flex flex-col gap-3">
+      <span class="text-primary font-label font-bold text-xs uppercase tracking-wider mb-1">Recursos</span>
+      <a class="text-on-surface-variant hover:text-primary underline transition-colors font-body text-sm" href="#">Portal UFBA</a>
+      <a class="text-on-surface-variant hover:text-primary underline transition-colors font-body text-sm" href="#">Contato</a>
+    </div>
+    <div>
+      <span class="text-primary font-label font-bold text-xs uppercase tracking-wider mb-4 block">Institucional</span>
+      <p class="text-on-surface-variant font-body text-xs leading-relaxed">
+        © 2024 UFBA · Departamento de Ciência da Computação.<br/>Design Editorial Acadêmico.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  function toggleAcc(btn) {
+    const body = btn.nextElementSibling;
+    const arrow = btn.querySelector('.acc-arrow');
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
