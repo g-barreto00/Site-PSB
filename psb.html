@@ -155,7 +155,7 @@
   /* Content accordion */
   .acc-body { display: none; }
   .acc-body.open { display: block; }
-  .acc-arrow { transition: transform 0.2s; }
+  .acc-arrow { transition: transform 0.2s; display: inline-block; }
   .acc-arrow.open { transform: rotate(180deg); }
 
   /* Scrollbar */
@@ -652,71 +652,157 @@
 
       </div>
 
-      <!-- Sidebar com referência rápida -->
-      <div class="space-y-5">
-        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
-          <div class="text-tertiary font-label text-xs uppercase tracking-wider mb-4">Referência Rápida</div>
-          <div class="space-y-2">
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">MOV dst, src</code>
-              <span class="text-on-surface-variant text-xs font-body">Mover dados</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">ADD dst, src</code>
-              <span class="text-on-surface-variant text-xs font-body">Adição</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">SUB dst, src</code>
-              <span class="text-on-surface-variant text-xs font-body">Subtração</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">CMP a, b</code>
-              <span class="text-on-surface-variant text-xs font-body">Comparar</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">JMP label</code>
-              <span class="text-on-surface-variant text-xs font-body">Salto</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">JZ / JNZ</code>
-              <span class="text-on-surface-variant text-xs font-body">Desvio condicional</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
-              <code class="text-secondary font-body">CALL label</code>
-              <span class="text-on-surface-variant text-xs font-body">Chamar função</span>
-            </div>
-            <div class="flex justify-between items-center py-2">
-              <code class="text-secondary font-body">RET</code>
-              <span class="text-on-surface-variant text-xs font-body">Retornar</span>
-            </div>
+<!-- Sidebar com referência rápida -->
+<div class="space-y-5">
+  <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+    <div class="text-tertiary font-label text-xs uppercase tracking-wider mb-4">Referência Rápida: X86 -> AVR</div>
+    <div class="space-y-2">
+
+      <!-- MOV -->
+      <div class="border-b border-outline-variant/15">
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">MOV end1, end2</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Mover dados</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rd, Rr</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16, r17</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
           </div>
         </div>
+      </div>
 
-        <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
-          <div class="text-tertiary font-label text-xs uppercase tracking-wider mb-4">Flags de Status</div>
-          <div class="space-y-2.5 text-sm font-body">
-            <div class="flex items-center gap-3">
-              <span class="w-6 h-6 bg-secondary text-on-secondary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">ZF</span>
-              <span class="text-on-surface-variant">Zero Flag — resultado = 0</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="w-6 h-6 bg-primary text-on-primary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">SF</span>
-              <span class="text-on-surface-variant">Sign Flag — resultado negativo</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="w-6 h-6 bg-tertiary text-on-tertiary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">CF</span>
-              <span class="text-on-surface-variant">Carry Flag — overflow sem sinal</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="w-6 h-6 bg-outline text-on-primary rounded flex items-center justify-center text-xs font-label font-bold flex-shrink-0">OF</span>
-              <span class="text-on-surface-variant">Overflow Flag — overflow c/ sinal</span>
-            </div>
+      <!-- ADD -->
+      <div class="border-b border-outline-variant/15">
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">ADD end1, end2</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Adição</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rd, Rr</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16, r17</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB -->
+      <div class="border-b border-outline-variant/15">
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">SUB dst, src</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Subtração</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rd, Rr</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16, r17</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INC -->
+      <div class="border-b border-outline-variant/15">
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">INC end1</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Incrementar</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rd</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEC -->
+      <div class="border-b border-outline-variant/15">
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">DEC end1</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Decrementar</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rd</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PUSH -->
+      <div class="border-b border-outline-variant/15">
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">PUSH end1</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Empilhar</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rr</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POP -->
+      <div>
+        <button onclick="toggleAcc(this)" class="w-full flex justify-between items-center py-2 text-left bg-transparent border-none cursor-pointer">
+          <code class="text-secondary font-body">POP end1</code>
+          <div class="flex items-center gap-2">
+            <span class="text-on-surface-variant text-xs font-body">Desempilhar</span>
+            <span class="acc-arrow text-on-surface-variant text-xs">▾</span>
+          </div>
+        </button>
+        <div class="acc-content" style="display:none; padding-bottom: 10px;">
+          <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
+            <div class="text-on-surface/50 mb-1"># equivalente em AVR</div>
+            <div>instrucao_avr Rd</div>
+            <div class="mt-1 text-on-surface/50"># exemplo de uso</div>
+            <div>instrucao_avr r16</div>
+            <div class="text-on-surface-variant mt-1">; comentário explicativo aqui</div>
           </div>
         </div>
       </div>
 
     </div>
   </div>
+</div>
+
+
 </section>
 
 
@@ -979,10 +1065,11 @@
 
 <script>
   function toggleAcc(btn) {
-    const body = btn.nextElementSibling;
+    const content = btn.nextElementSibling;
     const arrow = btn.querySelector('.acc-arrow');
-    body.classList.toggle('open');
-    arrow.classList.toggle('open');
+    const isOpen = content.style.display === 'block';
+    content.style.display = isOpen ? 'none' : 'block';
+    arrow.classList.toggle('open', !isOpen);
   }
 </script>
 </body>
