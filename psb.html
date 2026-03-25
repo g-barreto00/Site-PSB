@@ -162,6 +162,71 @@
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #f4f4ef; }
   ::-webkit-scrollbar-thumb { background: #c5c6d2; border-radius: 3px; }
+
+    .step-card {
+    position: relative;
+    padding: 2rem;
+    background: var(--surface-container-lowest);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(var(--outline-variant-rgb), 0.2);
+  }
+ 
+  /* Wrapper que controla a altura colapsada */
+  .step-card-body {
+    max-height: 220px;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+ 
+  .step-card-body.expanded {
+    max-height: none; /* grande o suficiente para qualquer conteúdo */
+  }
+ 
+  /* Gradiente de fade na parte inferior quando colapsado */
+  .step-card-body::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--surface-container-lowest, #fff));
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+ 
+  .step-card-body.expanded::after {
+    opacity: 0;
+  }
+ 
+  /* Botão Ver mais / Ver menos */
+  .expand-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--primary, #6750a4);
+    padding: 0.3rem 0;
+    transition: opacity 0.2s;
+  }
+ 
+  .expand-btn:hover { opacity: 0.75; }
+ 
+  .expand-btn svg {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+ 
+  .expand-btn.open svg {
+    transform: rotate(180deg);
+  }
 </style>
 </head>
 <body class="bg-background text-on-surface">
@@ -896,90 +961,526 @@
 
 
 <!-- ══════════════════
-     INSTRUÇÕES — 4 steps layout horizontal idêntico à referência
+     INSTRUÇÕES — 3 steps layout horizontal idêntico à referência
 ══════════════════ -->
 <section class="py-24 bg-surface-container-low" id="instrucoes">
   <div class="max-w-7xl mx-auto px-8">
 
     <div class="text-center mb-20">
-      <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold">Configuração do Ambiente</span>
+      <span class="text-tertiary uppercase tracking-widest text-xs font-label font-bold"></span>
       <h2 class="text-4xl font-headline text-primary mt-2">Instruções de Base</h2>
-      <p class="text-on-surface-variant mt-4 font-body">Guia passo a passo para configurar seu ambiente de desenvolvimento</p>
+      <p class="text-on-surface-variant mt-4 font-body">Passo a passo essencial</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-      <!-- Step 1 -->
-      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
-        <div class="step-num">01</div>
-        <h4 class="text-xl font-headline text-primary mb-4">Toolchain</h4>
-        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
-          Instalação do NASM e GCC para compilação de código Assembly e integração com C.
-        </p>
-        <div class="bg-surface-container rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
-          <div class="text-on-surface/50 mb-1"># Ubuntu/Debian</div>
-          <div>$ sudo apt install nasm gcc</div>
-          <div class="mt-1 text-on-surface/50"># verificar</div>
-          <div>$ nasm --version</div>
-        </div>
-      </div>
+       
+    
+       <!-----------------------------------------------------Step 1 --------------------------------------------------------->
 
-      <!-- Step 2 -->
-      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
-        <div class="step-num">02</div>
-        <h4 class="text-xl font-headline text-primary mb-4">Ambiente</h4>
-        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
-          Configuração do VS Code com extensões de syntax highlighting e debuggers específicos.
-        </p>
-        <div class="space-y-2">
-          <div class="bg-surface-container rounded-lg px-3 py-2 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-secondary flex-shrink-0"></span>
-            <span class="text-xs font-body text-on-surface">ASM Code Lens</span>
+
+
+        <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group" style="margin-top:1rem">
+          <div class="step-num">01</div>
+          <h4 class="text-xl font-headline text-primary mb-4">LED-Vcc</h4>
+        
+          <div class="step-card-body" id="body-1">
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Primeiramente, há de ser criado um snippet de inicialização do µC, responsável por configurá-lo 
+              para que ele possa realizar o objetivo desejado. Para isso, iremos definir o DDRD 
+              (Data Direction Register D) para 0b11111111, para que todos os pinos de PORTD estejam 
+              na direção de output.
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">INICIO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b11111111</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRD, R16</div>
+            </div>
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Por fim, basta passar o valor de 0b00000001 para PORTD, definindo que o pino D0 será o único 
+              a receber a corrente de 5Vcc, enquanto os outros permanecerão desligados.
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div>LDI R16, 0b00000001</div>
+              <div>OUT PORTD, R16</div>
+            </div>
           </div>
-          <div class="bg-surface-container rounded-lg px-3 py-2 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-tertiary flex-shrink-0"></span>
-            <span class="text-xs font-body text-on-surface">x86 and x86_64 NASM</span>
-          </div>
-          <div class="bg-surface-container rounded-lg px-3 py-2 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-primary flex-shrink-0"></span>
-            <span class="text-xs font-body text-on-surface">Native Debug (GDB)</span>
-          </div>
+        
+          <button class="expand-btn" id="btn-1" onclick="toggleCard('1')">
+            Ver mais
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
         </div>
-      </div>
+    
+        
+       
+       
+         <!-----------------------------------------------------Step 2 --------------------------------------------------------->
 
-      <!-- Step 3 -->
-      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
-        <div class="step-num">03</div>
-        <h4 class="text-xl font-headline text-primary mb-4">Compilação</h4>
-        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
-          Inclusão das headers padrão e procedimento de montagem e linkedição do binário final.
-        </p>
-        <div class="bg-surface-container rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
-          <div class="text-on-surface/50 mb-1"># montar</div>
-          <div>$ nasm -f elf64 prog.asm</div>
-          <div class="mt-1 text-on-surface/50"># linkar</div>
-          <div>$ ld -o prog prog.o</div>
-          <div class="mt-1 text-on-surface/50"># executar</div>
-          <div>$ ./prog</div>
-        </div>
-      </div>
 
-      <!-- Step 4 -->
-      <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group">
-        <div class="step-num">04</div>
-        <h4 class="text-xl font-headline text-primary mb-4">Depuração</h4>
-        <p class="text-sm text-on-surface-variant font-body leading-relaxed mb-5">
-          Uso do GDB para depuração passo a passo, inspecionando registradores e memória em tempo real.
-        </p>
-        <div class="bg-surface-container rounded-lg p-3 font-mono text-xs text-on-surface leading-5">
-          <div class="text-on-surface/50 mb-1"># compilar com debug</div>
-          <div>$ nasm -f elf64 -g prog.asm</div>
-          <div class="mt-1">$ gdb ./prog</div>
-          <div class="text-on-primary-container">(gdb) break _start</div>
-          <div class="text-on-primary-container">(gdb) run</div>
-          <div class="text-on-primary-container">(gdb) info registers</div>
+        <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group" style="margin-top:1rem">
+          <div class="step-num">02</div>
+          <h4 class="text-xl font-headline text-primary mb-4">LED-GND</h4>
+        
+          <div class="step-card-body" id="body-2">
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Primeiramente, há de ser criado um snippet de inicialização do µC, responsável por configurá-lo 
+              para que ele possa realizar o objetivo desejado. Para isso, iremos definir o DDRD 
+              (Data Direction Register D) para 0b11111111, para que todos os pinos de PORTD estejam 
+              na direção de output.
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">INICIO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b11111111</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRD, R16</div>
+            </div>
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Por fim, basta passar o valor de 0b11111110 para PORTD, definindo que o pino D0 será o único 
+              a não receber corrente, atuando como GND, enquanto os outros permanecerão ligados.
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div>LDI R16, 0b11111110</div>
+              <div>OUT PORTD, R16</div>
+            </div>
+          </div>
+        
+          <button class="expand-btn" id="btn-2" onclick="toggleCard('2')">
+            Ver mais
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
         </div>
-      </div>
+        
+    
+     
+         <!-----------------------------------------------------Step 3 --------------------------------------------------------->
+
+
+
+        <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group" style="margin-top:1rem">
+          <div class="step-num">03</div>
+          <h4 class="text-xl font-headline text-primary mb-4">Blink</h4>
+        
+          <div class="step-card-body" id="body-3">
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Primeiramente, iremos definir o DDRD para 0b11111111, para que todos os pinos de PORTD estejam 
+              na direção de output e também definir PORTD para 0b00000000, para garantir que todos os pinos 
+              comecem desligados.
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">INICIO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b11111111</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRD, R16</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b00000000</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTD, R16</div>
+            </div>
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Para a nossa rotina principal, iremos primeiramente utilizar a instrução SBI (Set Bit I/O) em 
+              (PORTD, PD0) para mudar o valor de PORTD de 0b00000000 para 0b00000001, ligando o LED ligado 
+              ao pino D0. Após isso, chamaremos uma rotina de atraso e depois utilizaremos a instrução 
+              CBI (Clear Bit I/O) em (PORTD, PD0) para mudar o valor de PORTD de 0b00000001 para 0b00000000 
+              novamente. Por fim, utilizaremos a instrução RJMP na label PRINCIPAL para voltarmos ao início 
+              da rotina.
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">PRINCIPAL:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;SBI PORTD, PD0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL ATRASO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;CBI PORTD, PD0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL ATRASO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;RJMP PRINCIPAL</div>
+            </div>
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Para implementar a rotina de atraso utilizaremos a informação de que o μC ATmega328P opera a 
+              16 MHz, ou seja, para gerarmos um atraso próximo de 1 s precisamos ocupar cerca de 16.000.000 
+              ciclos de clock...
+            </p>
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">ATRASO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R17, 82</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;L17:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R18, 255</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;L18:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R19, 255</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;L19:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R19</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L19</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R18</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L18</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R17</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L17</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+            </div>
+          </div>
+        
+          <button class="expand-btn" id="btn-3" onclick="toggleCard('3')">
+            Ver mais
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+
+         <!-----------------------------------------------------Step 4 --------------------------------------------------------->
+
+
+        <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group" style="margin-top:1rem">
+          <div class="step-num">04</div>
+          <h4 class="text-xl font-headline text-primary mb-4">Contador-4bits</h4>
+        
+          <div class="step-card-body" id="body-4">
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Primeiramente, iremos definir o DDRD para 0b11111111, para que todos os pinos de PORTD estejam 
+                na direção de output e limpar o registrador R16, que será utilizado como o contador principal.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">INICIO:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b11111111</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRD, R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b00000000</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para a nossa rotina principal, iremos primeiramente realizar o output do número que está armazenado 
+                em R16 em PORTD, após isso chamaremos a nossa subrotina de atraso e de incrementação de R16, 
+                por fim, um RJMP é utilizado para manter a rotina em loop.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">PRINCIPAL:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTD, R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL ATRASO</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL INCREMENTAR</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;RJMP PRINCIPAL</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para implementar a rotina de incrementar R16, iremos primeiramente verificar se ele já está em 
+                seu valor limite, se sim, a rotina de zerar R16 será utilizada, se não, R16 será incrementado em 1.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">INCREMENTAR:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CPI R16, 15</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;BREQ ZERAR</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INC R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;ZERAR:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para implementar a rotina de atraso utilizaremos a informação de que o μC ATmega328P opera a 
+                16 MHz, ou seja, para gerarmos um atraso próximo de 1 s precisamos ocupar cerca de 16.000.000 
+                ciclos de clock. Para isso utilizamos a instrução <code class="text-secondary font-mono">DEC Rx</code>, 
+                que decrementa um registrador em 1 ciclo de clock, e o desvio condicional 
+                <code class="text-secondary font-mono">BRNE Lx</code>, que retorna ao rótulo enquanto o registrador 
+                ainda não for zero, consumindo 2 ciclos de clock quando o salto ocorre. Com a escolha dos valores 
+                iniciais <code class="text-secondary font-mono">R17 = 82</code>, 
+                <code class="text-secondary font-mono">R18 = 255</code> e 
+                <code class="text-secondary font-mono">R19 = 255</code>, formamos três laços aninhados cuja 
+                execução completa acumula aproximadamente 15.996.150 
+                (<code class="text-secondary font-mono">255 * 255 * 82 * 3</code>) ciclos de clock, produzindo 
+                assim um atraso de aproximadamente 1 segundo.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">ATRASO:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R17, 82</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;L17:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R18, 255</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;L18:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R19, 255</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;L19:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R19</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L19</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R18</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L18</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R17</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L17</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                <span class="text-on-surface-variant/60 text-xs">Observação:</span> 
+                <code class="text-secondary font-mono">BRNE Lx</code>, nesse caso, não precisa de uma instrução 
+                como <code class="text-secondary font-mono">CPI Rx, 0</code> antes pois ele, como dito na 
+                introdução, verifica sempre a Flag Z do SREG, então ele voltará para Lx sempre que o decremento 
+                não resultou em 0.
+              </p>
+        </div>
+          <button class="expand-btn" id="btn-4" onclick="toggleCard('4')">
+            Ver mais
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        
+        <!-----------------------------------------------------Step 5 --------------------------------------------------------->
+
+
+        <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group" style="margin-top:1rem">
+          <div class="step-num">05</div>
+          <h4 class="text-xl font-headline text-primary mb-4">Contador-Decimal</h4>
+        
+          <div class="step-card-body" id="body-5">
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Primeiramente, iremos definir o DDRB para 0b11111111, para que todos os pinos de PORTB estejam 
+                na direção de output e limpar o registrador R16, que será utilizado como o contador principal.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">INICIO:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b11111111</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRB, R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b00000000</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para a nossa rotina principal, iremos primeiramente chamar a rotina de decodificação do número 
+                armazenado em R16 para logo em seguida realizar o output em PORTB do código BCD armazenado em R0. 
+                Após isso as rotinas de atraso e incrementar são chamadas e por fim RJMP é utilizado para manter 
+                a rotina em loop.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">PRINCIPAL:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL DECODIFICAR</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTB, R0</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL ATRASO</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL INCREMENTAR</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;RJMP PRINCIPAL</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para a rotina de decodificação é utilizada uma jump table de dados com os códigos BCD armazenados em binário.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">DECODIFICAR:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZH, HIGH(TABELA &lt;&lt; 1)</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZL, LOW(TABELA &lt;&lt; 1)</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;ADD ZL, R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;BRCC LEITURA</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;INC ZH</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LEITURA:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LPM R0, Z</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+                <div class="mt-2"></div>
+                <div class="text-on-surface/50 mb-1">TABELA:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para implementar a rotina de atraso utilizaremos a informação de que o μC ATmega328P opera a 
+                16 MHz, ou seja, para gerarmos um atraso próximo de 1 s precisamos ocupar cerca de 16.000.000 
+                ciclos de clock. Para isso utilizamos a instrução <code class="text-secondary font-mono">DEC Rx</code>, 
+                que decrementa um registrador em 1 ciclo de clock, e o desvio condicional 
+                <code class="text-secondary font-mono">BRNE Lx</code>, que retorna ao rótulo enquanto o registrador 
+                ainda não for zero, consumindo 2 ciclos de clock quando o salto ocorre. Com a escolha dos valores 
+                iniciais <code class="text-secondary font-mono">R17 = 82</code>, 
+                <code class="text-secondary font-mono">R18 = 255</code> e 
+                <code class="text-secondary font-mono">R19 = 255</code>, formamos três laços aninhados cuja 
+                execução completa acumula aproximadamente 15.996.150 
+                (<code class="text-secondary font-mono">255 * 255 * 82 * 3</code>) ciclos de clock, produzindo 
+                assim um atraso de aproximadamente 1 segundo.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">ATRASO:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R17, 82</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;L17:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R18, 255</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;L18:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R19, 255</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;L19:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R19</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L19</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R18</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L18</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R17</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L17</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              </div>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                <span class="text-on-surface-variant/60 text-xs">Observação:</span> 
+                <code class="text-secondary font-mono">BRNE Lx</code>, nesse caso, não precisa de uma instrução 
+                como <code class="text-secondary font-mono">CPI Rx, 0</code> antes pois ele, como dito na 
+                introdução, verifica sempre a Flag Z do SREG, então ele voltará para Lx sempre que o decremento 
+                não resultou em 0.
+              </p>
+
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+                Para implementar a rotina de incrementar R16, iremos primeiramente verificar se ele já está em 
+                seu valor limite, se sim, a rotina de zerar R16 será utilizada, se não, R16 será incrementado em 1.
+              </p>
+
+              <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+                <div class="text-on-surface/50 mb-1">INCREMENTAR:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;CPI R16, 15</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;BREQ ZERAR</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INC R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;ZERAR:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              </div>
+            </div>
+        
+          <button class="expand-btn" id="btn-5" onclick="toggleCard('5')">
+            Ver mais
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+       
+       
+         <!-----------------------------------------------------Step 6 --------------------------------------------------------->
+
+
+
+          <div class="relative p-8 bg-surface-container-lowest step-card rounded-xl border border-outline-variant/20 group" style="margin-top:1rem">
+          <div class="step-num">06</div>
+          <h4 class="text-xl font-headline text-primary mb-4">Botao-INC/DEC</h4>
+        
+          <div class="step-card-body" id="body-6">
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Primeiramente, configuraremos DDRB para input e DDRD para output e ativaremos a função de pullup 
+              em PD0 e PD1, após isso, definimos R16 para 0, já que esse será nosso contador e chamamos a rotina 
+              de decodificação, para inicializarmos o display como o número 0.
+            </p>
+
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">INICIO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b11111111</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRB, R16</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b00000000</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT DDRD, R16</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0b00000011</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTD, R16</div>
+              <div class="mt-2"></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;CALL DECODIFICAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTB, R0</div>
+            </div>
+
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Para a rotina principal com dois botões, implementamos quatro subrotinas: 
+              <code class="text-secondary font-mono">INC_SOLTO</code> e <code class="text-secondary font-mono">INC_PRESSIONADO</code> 
+              para o botão de incremento (PD0), e <code class="text-secondary font-mono">DEC_SOLTO</code> e 
+              <code class="text-secondary font-mono">DEC_PRESSIONADO</code> para o botão de decremento (PD1). 
+              A lógica segue o mesmo princípio utilizado anteriormente: nas subrotinas "SOLTO", utilizamos 
+              <code class="text-secondary font-mono">SBIC</code> para verificar quando o pino correspondente 
+              estiver em nível alto, mantendo o programa em espera até que o botão seja pressionado. Nas 
+              subrotinas "PRESSIONADO", aplicamos <code class="text-secondary font-mono">SBIS</code> para 
+              detectar quando o pino retornar ao nível alto, indicando que o botão foi solto. Quando isso 
+              ocorre, executamos a rotina apropriada — INCREMENTAR ou DECREMENTAR — seguido da decodificação 
+              e envio do valor para PORTB. Como agora há dois botões independentes, é necessário alternar a 
+              lógica de detecção entre eles: sempre que um botão é solto, a execução retorna à sua rotina de 
+              "solto", mas também verifica se o outro botão foi pressionado, garantindo que a navegação entre 
+              os dois fluxos (incremento e decremento) seja contínua e responsiva ao estado atual de cada entrada.
+            </p>
+
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">PRINCIPAL:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;INC_SOLTO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SBIC PIND, PD0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP DEC_SOLTO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP INC_PRESSIONADO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;INC_PRESSIONADO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SBIS PIND, PD0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP INC_PRESSIONADO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL INCREMENTAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL DECODIFICAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTB, R0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP INC_SOLTO</div>
+              <div class="mt-2"></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;DEC_SOLTO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SBIC PIND, PD1</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP INC_SOLTO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP DEC_PRESSIONADO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;DEC_PRESSIONADO:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SBIS PIND, PD1</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP DEC_PRESSIONADO</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL DECREMENTAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL DECODIFICAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OUT PORTB, R0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJMP DEC_SOLTO</div>
+            </div>
+
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Para a rotina de decodificação é utilizada uma jump table de dados com os códigos BCD armazenados em binário.
+            </p>
+
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">DECODIFICAR:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZH, HIGH(TABELA &lt;&lt; 1)</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZL, LOW(TABELA &lt;&lt; 1)</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;ADD ZL, R16</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;BRCC LEITURA</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;INC ZH</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;LEITURA:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LPM R0, Z</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              <div class="mt-2"></div>
+              <div class="text-on-surface/50 mb-1">TABELA:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111</div>
+            </div>
+
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Para implementar a rotina de incrementar R16, iremos primeiramente verificar se ele já está em 
+              seu valor limite, se sim, a rotina de zerar R16 será utilizada, se não, R16 será incrementado em 1.
+            </p>
+
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">INCREMENTAR:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;CPI R16, 9</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;BREQ ZERAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INC R16</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;ZERAR:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+            </div>
+
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed">
+              Para implementar a rotina de decrementar R16, iremos primeiramente verificar se ele já está em 
+              seu valor limite, se sim, a rotina de maximizar R16 será utilizada, se não, R16 será decrementado em 1.
+            </p>
+
+            <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
+              <div class="text-on-surface/50 mb-1">DECREMENTAR:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;CPI R16, 0</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;BREQ MAXIMIZAR</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEC R16</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;MAXIMIZAR:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 9</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+            </div>
+          </div>
+        
+          <button class="expand-btn" id="btn-6" onclick="toggleCard('6')">
+            Ver mais
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+
+
+      
 
     </div>
   </div>
@@ -1070,7 +1571,16 @@
     const isOpen = content.style.display === 'block';
     content.style.display = isOpen ? 'none' : 'block';
     arrow.classList.toggle('open', !isOpen);
+    
   }
+
+  function toggleCard(id) {
+  const body = document.getElementById('body-' + id);
+  const btn  = document.getElementById('btn-' + id);
+  const isExpanded = body.classList.toggle('expanded');
+  btn.classList.toggle('open', isExpanded);
+  btn.childNodes[0].textContent = isExpanded ? 'Ver menos ' : 'Ver mais ';
+}
 </script>
 </body>
 </html>
