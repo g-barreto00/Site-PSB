@@ -12,42 +12,38 @@ O repositório reúne diferentes tipos de materiais, incluindo códigos de exemp
 
 ## Contribuições
 
-Este é um projeto aberto à colaboração. Qualquer pessoa interessada pode contribuir com:
--  melhorias
--  novos conteúdos
--   correções.
+Este é um projeto aberto à colaboração. Qualquer pessoa interessada pode contribuir com melhorias, novos conteúdos ou correções.
 
-Para contribuir, basta realizar um fork do repositório, criar uma branch com suas alterações e enviar um Pull Request. Todas as contribuições passam por um processo de avaliação antes de serem integradas ao projeto, garantindo a qualidade e consistência do material.
+Para contribuir, clone o repositório, crie uma branch com suas alterações, faça os commits necessários e envie um Pull Request. Todas as contribuições passam por um processo de avaliação antes de serem integradas à main, garantindo a qualidade e consistência do material.
 
 A estrutura do projeto pode evoluir ao longo do tempo, mas a ideia é manter os conteúdos organizados por temas da disciplina, como Arquitetura de Computadores, Assembly, Registradores, Memória, Entrada e Saída (I/O) e Controle de Fluxo.
 
 ---
 
-## Como usar
-
-Os conteúdos podem ser acessados diretamente pelo GitHub ou por meio do clone do repositório para uso local:
+## Como contribuir
 
 ```bash
-# 1. Fork no GitHub (não é terminal, é no botão do GitHub)
+# 1. Clonar o repositório
+git clone https://github.com/USUARIO/REPOSITORIO.git
+cd REPOSITORIO
 
-# 2. Clonar o fork
-git clone https://github.com/SEU-USUARIO/SEU-FORK.git
-cd repo
-
-# 3. Criar uma branch
+# 2. Criar uma branch nova
 git checkout -b minha-contribuicao
 
-# 4. Fazer alterações...
+# 3. Fazer as alterações necessárias...
 
-# 5. Adicionar arquivos
+# 4. Adicionar os arquivos modificados
 git add .
 
-# 6. Commit
+# 5. Commit (pode ser feito quantas vezes precisar)
 git commit -m "feat: adiciona exemplo de registradores"
 
-# 7. Enviar pro GitHub
+# 6. Enviar a branch para o GitHub
 git push origin minha-contribuicao
 ```
+
+Após o push, abra um **Pull Request** no GitHub para que as alterações sejam avaliadas e integradas à branch `main`.
+
 ---
 ### Padrão de commits
 

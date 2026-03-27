@@ -229,6 +229,11 @@
     transform: rotate(180deg);
   }
 
+  #mobile-menu {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
   html {
   scroll-behavior: smooth;
 }
@@ -251,17 +256,16 @@
       <a class="text-on-surface-variant hover:text-primary transition-colors font-headline text-base tracking-tight" href="#material">Material</a>
     </div>
     <!-- Mobile hamburger -->
-    <button class="md:hidden text-primary" onclick="this.nextElementSibling.classList.toggle('hidden')">
+    <button class="md:hidden text-primary" onclick="toggleMenu()">
       <span class="material-symbols-outlined">menu</span>
     </button>
-  </div>
-  <!-- Mobile menu -->
-  <div class="hidden md:hidden bg-background border-t border-outline-variant/20 px-6 py-4 flex flex-col gap-4">
-    <a class="text-on-surface-variant font-headline text-base" href="#teoria" onclick="this.closest('.hidden, div').classList.add('hidden')">Teoria</a>
-    <a class="text-on-surface-variant font-headline text-base" href="#simulide">SIMULIDE</a>
-    <a class="text-on-surface-variant font-headline text-base" href="#instrucoes">Instruções</a>
-    <a class="text-on-surface-variant font-headline text-base" href="#material">Material</a>
-  </div>
+<!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden bg-background border-t border-outline-variant/20 px-6 py-4 flex-col gap-4">
+      <a class="text-on-surface-variant font-headline text-base" href="#teoria">Teoria</a>
+      <a class="text-on-surface-variant font-headline text-base" href="#simulide">SIMULIDE</a>
+      <a class="text-on-surface-variant font-headline text-base" href="#instrucoes">Instruções</a>
+      <a class="text-on-surface-variant font-headline text-base" href="#material">Material</a>
+    </div>
 </nav>
 
 <main class="pt-20">
@@ -1015,6 +1019,11 @@
               <div>LDI R16, 0b00000001</div>
               <div>OUT PORTD, R16</div>
             </div>
+
+            <div class="bg-surface-container-low rounded-lg p-3 mt-3">
+              <img src="ledvcc.png" alt="Circuito LED-GND" class="w-full h-auto rounded-lg object-cover">
+            </div>
+
           </div>
         
           <button class="expand-btn" id="btn-1" onclick="toggleCard('1')">
@@ -1055,6 +1064,11 @@
               <div>LDI R16, 0b11111110</div>
               <div>OUT PORTD, R16</div>
             </div>
+
+             <div class="bg-surface-container-low rounded-lg p-3 mt-3">
+              <img src="ledgnd.png" alt="Circuito LED-GND" class="w-full h-auto rounded-lg object-cover">
+            </div>
+           
           </div>
         
           <button class="expand-btn" id="btn-2" onclick="toggleCard('2')">
@@ -1125,6 +1139,12 @@
               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRNE L17</div>
               <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
             </div>
+
+            <div class="bg-surface-container-low rounded-lg p-3 mt-3">
+              <img src="blink.png" alt="Circuito LED-GND" class="w-full h-auto rounded-lg object-cover">
+            </div>
+
+
           </div>
         
           <button class="expand-btn" id="btn-3" onclick="toggleCard('3')">
@@ -1224,6 +1244,12 @@
                 introdução, verifica sempre a Flag Z do SREG, então ele voltará para Lx sempre que o decremento 
                 não resultou em 0.
               </p>
+
+
+            <div class="bg-surface-container-low rounded-lg p-3 mt-3">
+              <img src="4bits.png" alt="Circuito LED-GND" class="w-full h-auto rounded-lg object-cover">
+            </div>
+              
         </div>
           <button class="expand-btn" id="btn-4" onclick="toggleCard('4')">
             Ver mais
@@ -1345,6 +1371,11 @@
                 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 0</div>
                 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
               </div>
+            
+              <div class="bg-surface-container-low rounded-lg p-3 mt-3">
+              <img src="decimal.png" alt="Circuito LED-GND" class="w-full h-auto rounded-lg object-cover">
+            </div>
+
             </div>
         
           <button class="expand-btn" id="btn-5" onclick="toggleCard('5')">
@@ -1480,6 +1511,11 @@
               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LDI R16, 9</div>
               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
             </div>
+
+            <div class="bg-surface-container-low rounded-lg p-3 mt-3">
+              <img src="incdec.png" alt="Circuito LED-GND" class="w-full h-auto rounded-lg object-cover">
+            </div>
+
           </div>
         
           <button class="expand-btn" id="btn-6" onclick="toggleCard('6')">
@@ -1581,6 +1617,26 @@
   const isExpanded = body.classList.toggle('expanded');
   btn.classList.toggle('open', isExpanded);
   btn.childNodes[0].textContent = isExpanded ? 'Ver menos ' : 'Ver mais ';
+}
+
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  if (menu.classList.contains('hidden')) {
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+    menu.style.maxHeight = '0';
+    menu.style.overflow = 'hidden';
+    menu.style.transition = 'max-height 0.3s ease';
+    requestAnimationFrame(() => {
+      menu.style.maxHeight = '300px';
+    });
+  } else {
+    menu.style.maxHeight = '0';
+    setTimeout(() => {
+      menu.classList.add('hidden');
+      menu.classList.remove('flex');
+    }, 300);
+  }
 }
 </script>
 </body>
