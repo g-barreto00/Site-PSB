@@ -1,0 +1,5 @@
+# Visual Studio cache/options directory
+.vs/
+
+# MacOS metadata files
+.DS_Store
