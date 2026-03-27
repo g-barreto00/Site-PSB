@@ -6,7 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<title>PSB · Prog.Software Básico UFBA</title>
+<title>PSB · Prog. Software Básico UFBA</title>
 <link rel="icon" type="image/png" href="img/mainIMG.png">
 <script id="tailwind-config">
   tailwind.config = {
@@ -1301,19 +1301,17 @@
               </p>
 
               <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
-                <div class="text-on-surface/50 mb-1">DECODIFICAR:</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZH, HIGH(TABELA &lt;&lt; 1)</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZL, LOW(TABELA &lt;&lt; 1)</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;ADD ZL, R16</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;BRCC LEITURA</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;INC ZH</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;LEITURA:</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LPM R0, Z</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
-                <div class="mt-2"></div>
-                <div class="text-on-surface/50 mb-1">TABELA:</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111</div>
+                  <div class="text-on-surface/50 mb-1">DECODIFICAR:</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZH, HIGH(TABELA &lt;&lt; 1)</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZL, LOW(TABELA &lt;&lt; 1)</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;ADD ZL, R16</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;ADC ZH, R1</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;LPM R0, Z</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+                  <div class="mt-2"></div>
+                  <div class="text-on-surface/50 mb-1">TABELA:</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111</div>
               </div>
 
               <p class="text-on-surface-variant text-sm font-body leading-relaxed">
@@ -1465,19 +1463,17 @@
             </p>
 
             <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
-              <div class="text-on-surface/50 mb-1">DECODIFICAR:</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZH, HIGH(TABELA &lt;&lt; 1)</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZL, LOW(TABELA &lt;&lt; 1)</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;ADD ZL, R16</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;BRCC LEITURA</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;INC ZH</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;LEITURA:</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LPM R0, Z</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
-              <div class="mt-2"></div>
-              <div class="text-on-surface/50 mb-1">TABELA:</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111</div>
+                <div class="text-on-surface/50 mb-1">DECODIFICAR:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZH, HIGH(TABELA &lt;&lt; 1)</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LDI ZL, LOW(TABELA &lt;&lt; 1)</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;ADD ZL, R16</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;ADC ZH, R1</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;LPM R0, Z</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;RET</div>
+                <div class="mt-2"></div>
+                <div class="text-on-surface/50 mb-1">TABELA:</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;.db 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111</div>
             </div>
 
             <p class="text-on-surface-variant text-sm font-body leading-relaxed">
@@ -1553,7 +1549,7 @@
       <div class="grid grid-cols-3 gap-4 w-full lg:w-auto">
         <a class="bg-white/8 hover:bg-white/15 p-6 rounded-xl text-on-primary transition-all flex flex-col items-center gap-3 border border-white/10 group" href="https://drive.google.com/drive/folders/1Rs8MgN0UxIAuQG0xZMGsd9Cd2IswS3NV?usp=sharing">
           <span class="material-symbols-outlined text-tertiary-fixed text-2xl group-hover:scale-110 transition-transform">description</span>
-          <span class="font-label font-medium text-sm">Materiais <br>   Extra</span>
+          <span class="font-label font-medium text-sm">Materiais <br>   Extras</span>
         </a>
         <a class="bg-white/8 hover:bg-white/15 p-6 rounded-xl text-on-primary transition-all flex flex-col items-center gap-3 border border-white/10 group" href="https://www.youtube.com/watch?v=G6xD6nZowBw&list=PLgQWT5lbdeggN-FQgRenW1UhV0NcMxYPm">
           <span class="material-symbols-outlined text-tertiary-fixed text-2xl group-hover:scale-110 transition-transform">smart_display</span>
