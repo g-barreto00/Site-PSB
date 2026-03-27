@@ -1119,9 +1119,18 @@
               <div>&nbsp;&nbsp;&nbsp;&nbsp;RJMP PRINCIPAL</div>
             </div>
             <p class="text-on-surface-variant text-sm font-body leading-relaxed">
-              Para implementar a rotina de atraso utilizaremos a informação de que o μC ATmega328P opera a 
-              16 MHz, ou seja, para gerarmos um atraso próximo de 1 s precisamos ocupar cerca de 16.000.000 
-              ciclos de clock...
+                Para implementar a rotina de atraso utilizaremos a informação de que o μC ATmega328P opera a
+                16 MHz, ou seja, para gerarmos um atraso próximo de 1 s precisamos ocupar cerca de 16.000.000
+                ciclos de clock. Para isso utilizamos a instrução <code class="text-secondary font-mono">DEC Rx</code>,
+                que decrementa um registrador em 1 ciclo de clock, e o desvio condicional
+                <code class="text-secondary font-mono">BRNE Lx</code>, que retorna ao rótulo enquanto o registrador
+                ainda não for zero, consumindo 2 ciclos de clock quando o salto ocorre. Com a escolha dos valores
+                iniciais <code class="text-secondary font-mono">R17 = 82</code>,
+                <code class="text-secondary font-mono">R18 = 255</code> e
+                <code class="text-secondary font-mono">R19 = 255</code>, formamos três laços aninhados cuja
+                execução completa acumula aproximadamente 15.996.150
+                (<code class="text-secondary font-mono">255 * 255 * 82 * 3</code>) ciclos de clock, produzindo
+                assim um atraso de aproximadamente 1 segundo.
             </p>
             <div class="bg-surface rounded-lg p-3 font-mono text-xs text-on-surface leading-5 my-3">
               <div class="text-on-surface/50 mb-1">ATRASO:</div>
