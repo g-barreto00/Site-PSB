@@ -23,16 +23,18 @@ A estrutura do projeto pode evoluir ao longo do tempo, mas a ideia é manter os 
 ## Como contribuir
 
 ```bash
-# 1. Clonar o repositório
-git clone https://github.com/USUARIO/REPOSITORIO.git
-cd REPOSITORIO
+# 1. Fork no GitHub (não é terminal, é no botão do GitHub)
 
-# 2. Criar uma branch nova
+# 2. Clonar o fork
+git clone https://github.com/SEU-USUARIO/SEU-FORK.git
+cd repo
+
+# 3. Criar uma branch nova
 git checkout -b minha-contribuicao
 
-# 3. Fazer as alterações necessárias...
+# 4. Fazer as alterações necessárias...
 
-# 4. Adicionar os arquivos modificados
+# 5. Adicionar os arquivos modificados
 git add .
 
 # 5. Commit (pode ser feito quantas vezes precisar)
