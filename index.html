@@ -530,12 +530,12 @@
 
                 <p>
                   O SP armazena o endereço da SRAM correspondente ao topo da pilha.
-                  No AVR, utiliza o modelo <strong>Full Descending Stack</strong>, onde o SP aponta para o último endereço ocupado.
+                  No AVR, utiliza-se o modelo <strong>Empty Descending Stack</strong>, onde o SP aponta para o primeiro endereço vazio.
                 </p>
 
                 <ul class="space-y-1">
-                  <li><strong>PUSH:</strong> pré-decrementa o SP e armazena o dado.</li>
-                  <li><strong>POP:</strong> carrega o dado e pós-incrementa o SP.</li>
+                  <li><strong>PUSH:</strong> armazena o dado e pós-decrementa o SP.</li>
+                  <li><strong>POP:</strong> pré-incrementa o SP e carrega o dado.</li>
                 </ul>
 
                 <p>
